@@ -20,7 +20,6 @@ try {
   throw e;
 }
 fallback.hidden = true;
-fallback.style.display = 'none';// <-- КЛЮЧЕВОЙ ФИКС: прячем заглушку при рабочем WebGL
 
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setClearColor(0x15110d, 1);
@@ -107,7 +106,8 @@ new OBJLoader().load(
     scene.add(model);
     fitCameraToObject(model);
     setupFilters(model);
-    fallback.hidden = true; // <-- на всякий случай ещё раз прячем заглушку
+    fallback.hidden = true;
+    fallback.style.display = 'none';
     console.log('Модель отображена. Мешей:', countMeshes(model));
   },
   (xhr) => {
@@ -119,13 +119,12 @@ new OBJLoader().load(
   }
 );
 
-// ---------- Нормализация (масштаб + посадка на пол) ----------
+// ---------- Нормализация ----------
 function normalizeModel(obj) {
   let box = new THREE.Box3().setFromObject(obj);
   const size = box.getSize(new THREE.Vector3());
   const maxDim = Math.max(size.x, size.y, size.z);
 
-  // Если размер невалидный (NaN/0) — не трогаем масштаб, только центрируем
   if (isFinite(maxDim) && maxDim > 0) {
     const scale = 2.5 / maxDim;
     obj.scale.setScalar(scale);
@@ -135,11 +134,11 @@ function normalizeModel(obj) {
   const center = box.getCenter(new THREE.Vector3());
   obj.position.x -= center.x;
   obj.position.z -= center.z;
-  obj.position.y -= box.min.y; // ставим нижнюю точку на уровень пола
+  obj.position.y -= box.min.y;
   return obj;
 }
 
-// ---------- Авто-подгонка камеры под модель ----------
+// ---------- Авто-подгонка камеры ----------
 function fitCameraToObject(obj) {
   const box = new THREE.Box3().setFromObject(obj);
   const size = box.getSize(new THREE.Vector3());
@@ -181,7 +180,7 @@ function setActive(on, off) {
   off.classList.remove('is-active'); off.setAttribute('aria-pressed', 'false');
 }
 
-// ---------- Фильтры деталей (работают по именам групп в OBJ) ----------
+// ---------- Фильтры деталей ----------
 function setupFilters(root) {
   const groups = { seat: [], legs: [], rungs: [] };
   root.traverse((o) => {
@@ -211,7 +210,7 @@ function setupFilters(root) {
 // ---------- Заглушка ----------
 function showFallback(msg) {
   if (canvas) canvas.hidden = true;
-  if (fallback) { fallback.hidden = false; fallback.innerHTML = `<p>${msg}</p>`; }
+  if (fallback) { fallback.hidden = false; fallback.style.display = 'grid'; fallback.innerHTML = `<p>${msg}</p>`; }
 }
 
 // ---------- Ресайз + цикл ----------
