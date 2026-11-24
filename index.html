@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Интерактивная 3D-модель классической деревянной табуретки: конструкция, размеры, породы древесины и история." />
+  <meta name="theme-color" content="#b87333" />
+
+  <title>Табуретка — девять деталей, которые держат десятилетия</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Табуретка — девять деталей, которые держат десятилетия" />
+  <meta property="og:description" content="Интерактивная 3D-модель, разбор конструкции с размерами, сравнение пород древесины и историческая хронология." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ru_RU" />
+
+  <!-- Шрифты -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Иконки -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Стили проекта -->
+  <link rel="stylesheet" href="./styles.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AA%91%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+
+  <!-- Шапка -->
+  <header class="site-header">
+    <div class="shell">
+      <a href="#top" class="logo">
+        <span class="logo-mark"><i class="fa-solid fa-cube" aria-hidden="true"></i></span>
+        <span>Табуретка</span>
+      </a>
+      <nav class="site-nav" aria-label="Основная навигация">
+        <ul>
+          <li><a href="#model">Модель</a></li>
+          <li><a href="#construction">Конструкция</a></li>
+          <li><a href="#materials">Материалы</a></li>
+          <li><a href="#history">История</a></li>
+          <li><a href="#faq">Вопросы</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- Hero -->
+    <section class="relative overflow-hidden" aria-labelledby="hero-title">
+      <div class="shell hero-grid section-pad">
+        <div>
+          <p class="eyebrow">Справочный проект</p>
+          <h1 id="hero-title" class="mt-5 text-4xl sm:text-5xl lg:text-6xl">
+            Табуретка — <span style="color: var(--primary-color)">девять деталей</span>, которые держат десятилетия
+          </h1>
+          <p class="mt-6 max-w-xl text-base sm:text-lg" style="color: var(--text-muted)">
+            Всё о самом простом предмете мебели: интерактивная 3D-модель, разбор конструкции с размерами, сравнение пород древесины и историческая хронология — для дизайнеров, мастеров и всех, кто интересуется мебелью.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#model" class="btn-wood"><i class="fa-solid fa-cube" aria-hidden="true"></i> Вращать 3D-модель</a>
+            <a href="#construction" class="btn-outline"><i class="fa-solid fa-ruler-combined" aria-hidden="true"></i> Размеры и детали</a>
+          </div>
+          <dl class="mt-10 stats-grid">
+            <div>
+              <dt style="font-size: 1.75rem; font-weight: 600;">45<span style="margin-left: 0.25rem; font-size: 0.875rem; font-weight: 400; color: var(--text-muted)">см</span></dt>
+              <dd style="margin: 0.25rem 0 0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted)">высота</dd>
+            </div>
+            <div>
+              <dt style="font-size: 1.75rem; font-weight: 600;">38<span style="margin-left: 0.25rem; font-size: 0.875rem; font-weight: 400; color: var(--text-muted)">см</span></dt>
+              <dd style="margin: 0.25rem 0 0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted)">диаметр сиденья</dd>
+            </div>
+            <div>
+              <dt style="font-size: 1.75rem; font-weight: 600;">9<span style="margin-left: 0.25rem; font-size: 0.875rem; font-weight: 400; color: var(--text-muted)">дет.</span></dt>
+              <dd style="margin: 0.25rem 0 0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted)">в конструкции</dd>
+            </div>
+            <div>
+              <dt style="font-size: 1.75rem; font-weight: 600;">3,5<span style="margin-left: 0.25rem; font-size: 0.875rem; font-weight: 400; color: var(--text-muted)">кг</span></dt>
+              <dd style="margin: 0.25rem 0 0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted)">масса</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="relative" style="padding-bottom: 2rem;">
+          <figure style="aspect-ratio: 4/5; overflow: hidden; border-radius: var(--radius-xl); border: 1px solid var(--border-color); box-shadow: var(--shadow-soft); background: var(--surface-color);">
+            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80" alt="Классическая деревянная табуретка" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
+          </figure>
+          <div class="note-card" style="position: absolute; bottom: 0; left: 1rem; right: 1rem; padding: 1rem; max-width: 16rem;">
+            <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--text-muted)">Классика</p>
+            <p style="margin-top: 0.25rem; font-size: 0.875rem;">Круглое сиденье, четыре ножки с наклоном 8 градусов и четыре проножки на высоте 14 см.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3D-модель -->
+    <section id="model" style="background: var(--ink-dark); color: #f4ecdf;" aria-labelledby="model-title">
+      <div class="shell section-pad">
+        <div style="display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1.5rem;">
+          <div>
+            <p class="eyebrow eyebrow-light">Интерактивная модель</p>
+            <h2 id="model-title" class="mt-3" style="font-size: 2rem; color: #f4ecdf;">Соберите табуретку взглядом</h2>
+            <p class="mt-4 max-w-xl" style="color: #c9bbaa;">
+              Поверните модель мышью или пальцем и выберите деталь — она подсветится в каркасе.
+            </p>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <button type="button" id="stoolRotate" class="stage-btn is-active" aria-pressed="true">
+              <i class="fa-solid fa-arrows-spin" aria-hidden="true"></i> Вращение
+            </button>
+            <button type="button" id="stoolWire" class="stage-btn" aria-pressed="false">
+              <i class="fa-solid fa-border-all" aria-hidden="true"></i> Каркас
+            </button>
+          </div>
+        </div>
+
+        <div class="model-grid">
+          <div class="stool-stage" id="stoolStage">
+            <canvas id="stoolCanvas" class="stool-canvas" tabindex="0" role="img" aria-label="Трёхмерная модель классической деревянной табуретки"></canvas>
+            <div id="stoolFallback" class="stool-fallback" hidden>
+              <p>Трёхмерная графика недоступна в этом браузере — показана фотография модели.</p>
+            </div>
+            <p class="stool-hint">Потяните, чтобы повернуть</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Конструкция -->
+    <section id="construction" class="section-pad" aria-labelledby="construction-title">
+      <div class="shell">
+        <div style="max-width: 42rem;">
+          <p class="eyebrow">Конструкция</p>
+          <h2 id="construction-title" class="mt-3" style="font-size: 2rem;">Девять деталей и три узла</h2>
+          <p class="mt-4" style="color: var(--text-muted);">
+            Классическая табуретка собирается без единого металлического крепежа: сиденье, четыре ножки и четыре проножки держатся на клею и нагелях.
+          </p>
+        </div>
+
+        <div class="construction-grid" style="margin-top: 2.5rem;">
+          <div class="spec-table-wrap">
+            <table class="spec-table">
+              <caption class="sr-only">Детали классической табуретки с размерами</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Деталь</th>
+                  <th scope="col">Размер</th>
+                  <th scope="col">Кол-во</th>
+                  <th scope="col">Заготовка</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Сиденье</td><td>380 × 40 мм</td><td>1</td><td style="color: var(--text-muted)">Щит из массива</td></tr>
+                <tr><td>Ножка</td><td>34 → 26 × 410 мм</td><td>4</td><td style="color: var(--text-muted)">Брусок</td></tr>
+                <tr><td>Проножка</td><td>18 × 300 мм</td><td>4</td><td style="color: var(--text-muted)">Круглый брусок</td></tr>
+                <tr><td>Нагель</td><td>8 × 60 мм</td><td>8</td><td style="color: var(--text-muted)">Берёза, бук</td></tr>
+                <tr><td>Клей</td><td>ПВА D3</td><td>—</td><td style="color: var(--text-muted)">Водостойкий</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <figure style="overflow: hidden; border-radius: var(--radius-lg); border: 1px solid var(--border-color); background: var(--surface-color);">
+            <img src="https://images.unsplash.com/photo-1503602642458-232111445657?w=600&q=80" alt="Детали деревянной табуретки крупным планом" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
+            <figcaption style="padding: 1rem; font-size: 0.8rem; color: var(--text-muted);">
+              Узел «ножка — сиденье»: гнездо глубиной 25 мм под углом 8 градусов, клей и нагель.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="steps-grid">
+          <article class="step-card">
+            <span class="step-num">1</span>
+            <h3 style="margin-top: 1rem; font-size: 1.15rem;">Разметка и раскрой</h3>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">Сиденье выпиливают из щита, ножки — из бруска 40 × 40 мм с припуском на токарную обработку.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-num">2</span>
+            <h3 style="margin-top: 1rem; font-size: 1.15rem;">Гнёзда под 8 градусов</h3>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">В сиденье сверлят четыре гнезда глубиной 25 мм. Угол наклона задаёт кондуктор или наклонный столик сверлильного станка.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-num">3</span>
+            <h3 style="margin-top: 1rem; font-size: 1.15rem;">Сборка насухо</h3>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">Каркас собирают без клея и проверяют диагонали: расхождение больше 2 мм — табурет будет шататься.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-num">4</span>
+            <h3 style="margin-top: 1rem; font-size: 1.15rem;">Склейка и нагели</h3>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">Клей наносят на гнездо и шип, после схватывания ставят нагели, лишнее срезают, изделие шлифуют и покрывают маслом.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Материалы -->
+    <section id="materials" class="section-pad" style="background: var(--surface-color);" aria-labelledby="materials-title">
+      <div class="shell">
+        <div style="display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1.5rem;">
+          <div style="max-width: 42rem;">
+            <p class="eyebrow">Материалы</p>
+            <h2 id="materials-title" style="margin-top: 0.75rem; font-size: 2rem;">Четыре породы, которые держат нагрузку</h2>
+            <p style="margin-top: 1rem; color: var(--text-muted);">
+              Табурет работает на сжатие и на изгиб одновременно: ножки — на сжатие, проножки — на изгиб. Поэтому важна не только твёрдость, но и упругость.
+            </p>
+          </div>
+          <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted);">Твёрдость по Бринеллю · плотность</p>
+        </div>
+
+        <div class="woods-grid">
+          <article class="wood-card">
+            <span class="wood-swatch" style="background: #9c6b3c;" aria-hidden="true"></span>
+            <h3 style="margin-top: 1rem; font-size: 1.25rem;">Дуб</h3>
+            <p style="margin-top: 0.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted);">700 кг/м³</p>
+            <div style="margin-top: 1rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);"><span>Твёрдость</span><span>3,7</span></div>
+              <div class="meter" style="margin-top: 0.5rem;"><span style="width: 100%;"></span></div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">Максимальный ресурс: табурет переживёт несколько ремонтов. Тяжёлый и дорогой материал, требует острого инструмента.</p>
+          </article>
+          <article class="wood-card">
+            <span class="wood-swatch" style="background: #c39361;" aria-hidden="true"></span>
+            <h3 style="margin-top: 1rem; font-size: 1.25rem;">Ясень</h3>
+            <p style="margin-top: 0.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted);">690 кг/м³</p>
+            <div style="margin-top: 1rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);"><span>Твёрдость</span><span>3,6</span></div>
+              <div class="meter" style="margin-top: 0.5rem;"><span style="width: 97%;"></span></div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">Прочнее дуба на изгиб, светлее по тону и хорошо гнётся после пропарки. Любимая порода для гнутой мебели.</p>
+          </article>
+          <article class="wood-card">
+            <span class="wood-swatch" style="background: #d8bd94;" aria-hidden="true"></span>
+            <h3 style="margin-top: 1rem; font-size: 1.25rem;">Берёза</h3>
+            <p style="margin-top: 0.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted);">640 кг/м³</p>
+            <div style="margin-top: 1rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);"><span>Твёрдость</span><span>2,7</span></div>
+              <div class="meter" style="margin-top: 0.5rem;"><span style="width: 73%;"></span></div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">Компромисс цены и прочности. Легко шлифуется и точится, но боится сырости — нужна надёжная защита маслом.</p>
+          </article>
+          <article class="wood-card">
+            <span class="wood-swatch" style="background: #e2cba6;" aria-hidden="true"></span>
+            <h3 style="margin-top: 1rem; font-size: 1.25rem;">Сосна</h3>
+            <p style="margin-top: 0.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted);">500 кг/м³</p>
+            <div style="margin-top: 1rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);"><span>Твёрдость</span><span>1,9</span></div>
+              <div class="meter" style="margin-top: 0.5rem;"><span style="width: 51%;"></span></div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">Самый лёгкий и доступный вариант. Мягкая древесина требует более массивных ножек и аккуратной затяжки соединений.</p>
+          </article>
+        </div>
+
+        <div class="tip-card">
+          <span class="tip-icon">
+            <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+          </span>
+          <div>
+            <h3 style="font-size: 1.1rem;">Что выбрать для первой табуретки</h3>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">
+              Начните с сосны: она дешевле и мягче, ошибки разметки не так обидно. Когда соединения начнут получаться — переходите на дуб или ясень.
+              Фанера и плитные материалы для ножек не годятся: слоистый материал плохо держит нагель на изгибе.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- История -->
+    <section id="history" class="section-pad" aria-labelledby="history-title">
+      <div class="shell">
+        <div style="max-width: 42rem;">
+          <p class="eyebrow">История</p>
+          <h2 id="history-title" style="margin-top: 0.75rem; font-size: 2rem;">От египетского трона до гнутой берёзы</h2>
+          <p style="margin-top: 1rem; color: var(--text-muted);">
+            Табурет старше стула: сначала это была привилегия, потом — рабочий инструмент, а в XX веке — полигон для промышленного дизайна.
+          </p>
+        </div>
+
+        <ol class="timeline-list" style="margin-top: 2.5rem; max-width: 48rem;">
+          <li class="timeline-item">
+            <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--primary-color);">III тыс. до н. э.</p>
+            <h3 style="margin-top: 0.25rem; font-size: 1.1rem;">Египет: трон для избранных</h3>
+            <p style="margin-top: 0.25rem; font-size: 0.9rem; color: var(--text-muted);">Самые ранние табуреты находят в египетских гробницах. Четырёхногие, с плетёным сиденьем, они были привилегией знати и жрецов.</p>
+          </li>
+          <li class="timeline-item">
+            <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--primary-color);">V–IV вв. до н. э.</p>
+            <h3 style="margin-top: 0.25rem; font-size: 1.1rem;">Греческий дифрос</h3>
+            <p style="margin-top: 0.25rem; font-size: 0.9rem; color: var(--text-muted);">В Греции появляется дифрос — лёгкий табурет с точёными ножками. Складная версия стала походным предметом, который носили за собой.</p>
+          </li>
+          <li class="timeline-item">
+            <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--primary-color);">Средние века</p>
+            <h3 style="margin-top: 0.25rem; font-size: 1.1rem;">Доска на трёх ножках</h3>
+            <p style="margin-top: 0.25rem; font-size: 0.9rem; color: var(--text-muted);">В Европе табурет делали из цельного куска дерева: толстая доска и три вставные ножки. Стул как тип мебели ещё редкость.</p>
+          </li>
+          <li class="timeline-item">
+            <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--primary-color);">XVII–XVIII вв.</p>
+            <h3 style="margin-top: 0.25rem; font-size: 1.1rem;">Столярная геометрия</h3>
+            <p style="margin-top: 0.25rem; font-size: 0.9rem; color: var(--text-muted);">Появляются проножки, точёные ножки и резные сиденья. Табурет становится учебной работой подмастерья — проверкой точности соединений.</p>
+          </li>
+          <li class="timeline-item">
+            <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--primary-color);">1930-е</p>
+            <h3 style="margin-top: 0.25rem; font-size: 1.1rem;">Алвар Аалто и гнутая берёза</h3>
+            <p style="margin-top: 0.25rem; font-size: 0.9rem; color: var(--text-muted);">Финский архитектор придумывает L-образную ножку из гнутой берёзы. Каркас табурета превращается в промышленное изделие без шипов.</p>
+          </li>
+          <li class="timeline-item">
+            <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--primary-color);">1950-е</p>
+            <h3 style="margin-top: 0.25rem; font-size: 1.1rem;">Три ножки и фанера</h3>
+            <p style="margin-top: 0.25rem; font-size: 0.9rem; color: var(--text-muted);">Арне Якобсен делает ставку на фанеру и три опоры. Массовое производство окончательно превращает табурет в предмет повседневного дизайна.</p>
+          </li>
+          <li class="timeline-item is-now">
+            <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--primary-color);">Сегодня</p>
+            <h3 style="margin-top: 0.25rem; font-size: 1.1rem;">Ремесло и станок с ЧПУ</h3>
+            <p style="margin-top: 0.25rem; font-size: 0.9rem; color: var(--text-muted);">Табурет живёт в двух мирах: ручная работа по традиционной технологии и раскрой на станке по цифровой модели.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Вариации -->
+    <section id="variants" class="section-pad" style="background: var(--surface-color);" aria-labelledby="variants-title">
+      <div class="shell">
+        <div style="max-width: 42rem;">
+          <p class="eyebrow">Вариации</p>
+          <h2 id="variants-title" style="margin-top: 0.75rem; font-size: 2rem;">Одна функция, четыре решения</h2>
+          <p style="margin-top: 1rem; color: var(--text-muted);">
+            Меняются форма сиденья, схема каркаса и материалы обивки — принцип остаётся тем же: три-четыре опоры и жёсткая связка между ними.
+          </p>
+        </div>
+
+        <div class="variants-grid">
+          <article class="note-card variant-card">
+            <h3 style="font-size: 1.1rem;">Круглый классический</h3>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">Круглое сиденье, наклонные ножки, четыре проножки. Самый устойчивый вариант для кухни и мастерской.</p>
+          </article>
+          <article class="note-card variant-card">
+            <h3 style="font-size: 1.1rem;">Квадратный</h3>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">Прямые ножки и царги вместо проножек. Проще в разметке, удобно ставить вплотную к стене.</p>
+          </article>
+          <article class="note-card variant-card">
+            <h3 style="font-size: 1.1rem;">Складной</h3>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">Перекрещенные ножки на металлической оси. Складывается в толщину нескольких сантиметров.</p>
+          </article>
+          <article class="note-card variant-card">
+            <h3 style="font-size: 1.1rem;">С мягким сиденьем</h3>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">Фанера, поролон и обивка тканью. Для рабочих мест, где сидят подолгу и нужна мягкая посадка.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section-pad" aria-labelledby="faq-title">
+      <div class="shell faq-grid">
+        <div>
+          <p class="eyebrow">Вопросы</p>
+          <h2 id="faq-title" style="margin-top: 0.75rem; font-size: 2rem;">Частые вопросы о конструкции</h2>
+          <p style="margin-top: 1rem; color: var(--text-muted);">
+            Короткие ответы на то, что чаще всего спрашивают мастера и дизайнеры при первой сборке.
+          </p>
+          <a href="#construction" class="btn-outline" style="margin-top: 1.5rem; display: inline-flex;">Перейти к конструкции</a>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Зачем нужны проножки, если ножки и так держатся?<i class="fa-solid fa-chevron-down faq-icon" aria-hidden="true"></i></summary>
+            <div class="faq-body">Проножки фиксируют геометрию каркаса: без них ножки постепенно расходятся под нагрузкой и табурет начинает шататься. Плюс это удобная подножка.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Можно ли собрать табурет на саморезах?<i class="fa-solid fa-chevron-down faq-icon" aria-hidden="true"></i></summary>
+            <div class="faq-body">Можно, но соединение быстро разболтается — саморез работает на выдёргивание. Традиционное решение: гнездо, клей и нагель, который стягивает узел навсегда.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Какая древесина лучше для первой работы?<i class="fa-solid fa-chevron-down faq-icon" aria-hidden="true"></i></summary>
+            <div class="faq-body">Сосна: мягкая, дешёвая и прощает ошибки разметки. Дуб и ясень стоит брать, когда соединения уже получаются точно с первого раза.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Насколько толстым должно быть сиденье?<i class="fa-solid fa-chevron-down faq-icon" aria-hidden="true"></i></summary>
+            <div class="faq-body">Для диаметра 380 мм достаточно 30–40 мм. Тоньше — появится прогиб под весом, толще — лишняя масса и расход материала.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Как рассчитать высоту табурета?<i class="fa-solid fa-chevron-down faq-icon" aria-hidden="true"></i></summary>
+            <div class="faq-body">От высоты столешницы отнимите 30 см: для обеденного стола 75 см получается 45 см. Для барной стойки 105–110 см — табурет высотой 65–75 см.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Чем покрыть готовое изделие?<i class="fa-solid fa-chevron-down faq-icon" aria-hidden="true"></i></summary>
+            <div class="faq-body">Масло с воском подчёркивает текстуру и легко обновляется без снятия старого слоя. Лак прочнее, но при ремонте требует полной перешлифовки.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Подвал -->
+  <footer class="site-footer">
+    <div class="shell">
+      <p>© 2026 Справочный проект «Табуретка». Сделано с любовью к дереву.</p>
+      <p><a href="#top">Наверх ↑</a></p>
+    </div>
+  </footer>
+
+  <!-- Importmap для Three.js -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <!-- Скрипт 3D-модели -->
+  <script type="module" src="./stool.js"></script>
+
+</body>
+</html>
