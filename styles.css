@@ -273,18 +273,32 @@ p { margin: 0; }
 .stool-canvas { width: 100%; height: 100%; outline: none; display: block; }
 .stool-canvas:focus-visible { box-shadow: inset 0 0 0 2px #c98a3f; }
 .stool-fallback {
-  position: absolute; inset: 0;
-  display: grid; place-items: center;
-  background: #1a1410; color: #c9bbaa;
-  text-align: center; padding: 2rem;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #1a1410;
+  color: #c9bbaa;
+  text-align: center;
+  padding: 2rem;
 }
+
+.stool-fallback[hidden] {
+  display: none !important;
+}
+
 .stool-hint {
-  position: absolute; bottom: 1rem; left: 50%;
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
   transform: translateX(-50%);
-  font-size: 0.8rem; color: #a89a87;
-  background: rgba(0,0,0,0.45);
-  padding: 0.4rem 0.9rem; border-radius: 999px;
+  font-size: 0.8rem;
+  color: #c9bbaa;
+  background: rgba(0,0,0,0.4);
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
   pointer-events: none;
+  opacity: 0.9;
 }
 
 .details-panel {
