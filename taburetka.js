@@ -15,10 +15,10 @@ try {
 }
 
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setClearColor(0x0f0a07, 1);
+renderer.setClearColor(0x15110d, 1);
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.Fog(0x0f0a07, 8, 18);
+scene.fog = new THREE.Fog(0x15110d, 8, 18);
 
 const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
 camera.position.set(3.5, 3, 4.5);
@@ -33,16 +33,14 @@ controls.autoRotate = true;
 controls.autoRotateSpeed = 1.2;
 controls.target.set(0, 1.1, 0);
 
-// Свет
-scene.add(new THREE.AmbientLight(0xfff1dc, 0.45));
-const key = new THREE.DirectionalLight(0xffe3bf, 1.1);
+scene.add(new THREE.AmbientLight(0xfff1dc, 0.55));
+const key = new THREE.DirectionalLight(0xffe3bf, 1.2);
 key.position.set(4, 6, 3);
 scene.add(key);
 const rim = new THREE.DirectionalLight(0xb87333, 0.5);
 rim.position.set(-4, 3, -3);
 scene.add(rim);
 
-// Пол
 const floor = new THREE.Mesh(
   new THREE.CircleGeometry(6, 64),
   new THREE.MeshStandardMaterial({ color: 0x1a1410, roughness: 1 })
@@ -51,29 +49,24 @@ floor.rotation.x = -Math.PI / 2;
 floor.position.y = -0.01;
 scene.add(floor);
 
-// Материал дерева
 const woodMat = new THREE.MeshStandardMaterial({
-  color: 0xc39361,
-  roughness: 0.75,
-  metalness: 0.0,
+  color: 0xe8a65a, roughness: 0.7, metalness: 0.0,
 });
 const wireMat = new THREE.MeshBasicMaterial({
-  color: 0xd9a76a,
-  wireframe: true,
+  color: 0xd9a76a, wireframe: true,
 });
 
-// Табуретка
 const stool = new THREE.Group();
+const seatGroup = new THREE.Group();
+const legsGroup = new THREE.Group();
+const rungsGroup = new THREE.Group();
 
-// Сиденье
 const seat = new THREE.Mesh(
-  new THREE.CylinderGeometry(0.6, 0.6, 0.1, 48),
-  woodMat
+  new THREE.CylinderGeometry(0.6, 0.6, 0.1, 48), woodMat
 );
 seat.position.y = 1.5;
-stool.add(seat);
+seatGroup.add(seat);
 
-// 4 ножки под углом 8°
 const legGeom = new THREE.CylinderGeometry(0.055, 0.04, 1.45, 16);
 const tilt = THREE.MathUtils.degToRad(8);
 for (let i = 0; i < 4; i++) {
@@ -83,10 +76,9 @@ for (let i = 0; i < 4; i++) {
   leg.position.set(Math.cos(angle) * r, 0.75, Math.sin(angle) * r);
   leg.rotation.x = Math.sin(angle) * tilt;
   leg.rotation.z = -Math.cos(angle) * tilt;
-  stool.add(leg);
+  legsGroup.add(leg);
 }
 
-// 4 проножки между ножками
 const rungGeom = new THREE.CylinderGeometry(0.025, 0.025, 0.85, 12);
 for (let i = 0; i < 4; i++) {
   const a1 = (i / 4) * Math.PI * 2 + Math.PI / 4;
@@ -99,12 +91,14 @@ for (let i = 0; i < 4; i++) {
   rung.position.copy(mid);
   rung.lookAt(p2);
   rung.rotateX(Math.PI / 2);
-  stool.add(rung);
+  rungsGroup.add(rung);
 }
 
+stool.add(seatGroup);
+stool.add(legsGroup);
+stool.add(rungsGroup);
 scene.add(stool);
 
-// Режим каркаса
 let wireMode = false;
 const applyMode = () => {
   stool.traverse((obj) => {
@@ -113,8 +107,7 @@ const applyMode = () => {
 };
 
 document.getElementById('stoolRotate').addEventListener('click', (e) => {
-  wireMode = false;
-  applyMode();
+  wireMode = false; applyMode();
   controls.autoRotate = true;
   e.currentTarget.classList.add('is-active');
   e.currentTarget.setAttribute('aria-pressed', 'true');
@@ -123,8 +116,7 @@ document.getElementById('stoolRotate').addEventListener('click', (e) => {
 });
 
 document.getElementById('stoolWire').addEventListener('click', (e) => {
-  wireMode = true;
-  applyMode();
+  wireMode = true; applyMode();
   controls.autoRotate = false;
   e.currentTarget.classList.add('is-active');
   e.currentTarget.setAttribute('aria-pressed', 'true');
@@ -132,7 +124,28 @@ document.getElementById('stoolWire').addEventListener('click', (e) => {
   document.getElementById('stoolRotate').setAttribute('aria-pressed', 'false');
 });
 
-// Ресайз
+const filterBtns = document.querySelectorAll('.filter-btn');
+const groups = {
+  all: [seatGroup, legsGroup, rungsGroup],
+  seat: [seatGroup],
+  legs: [legsGroup],
+  rungs: [rungsGroup],
+};
+
+filterBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const filter = btn.dataset.filter;
+    filterBtns.forEach((b) => {
+      b.classList.remove('is-active');
+      b.setAttribute('aria-pressed', 'false');
+    });
+    btn.classList.add('is-active');
+    btn.setAttribute('aria-pressed', 'true');
+    [seatGroup, legsGroup, rungsGroup].forEach((g) => { g.visible = false; });
+    groups[filter].forEach((g) => { g.visible = true; });
+  });
+});
+
 const resize = () => {
   const w = stage.clientWidth;
   const h = stage.clientHeight;
@@ -143,7 +156,6 @@ const resize = () => {
 resize();
 window.addEventListener('resize', resize);
 
-// Анимация
 const tick = () => {
   controls.update();
   renderer.render(scene, camera);
