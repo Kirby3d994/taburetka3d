@@ -113,13 +113,17 @@
             </p>
           </div>
           <div class="model-controls">
-            <button type="button" id="stoolRotate" class="stage-btn is-active" aria-pressed="true">
-              <i class="fa-solid fa-arrows-spin" aria-hidden="true"></i> Вращение
-            </button>
-            <button type="button" id="stoolWire" class="stage-btn" aria-pressed="false">
-              <i class="fa-solid fa-border-all" aria-hidden="true"></i> Каркас
-            </button>
-          </div>
+            <div class="model-controls">
+              <button type="button" id="stoolRotate" class="stage-btn is-active" aria-pressed="true">
+                <i class="fa-solid fa-arrows-spin" aria-hidden="true"></i> Вращение
+              </button>
+              <button type="button" id="stoolWire" class="stage-btn" aria-pressed="false">
+                <i class="fa-solid fa-border-all" aria-hidden="true"></i> Каркас
+              </button>
+              <button type="button" id="stoolAnim" class="stage-btn" aria-pressed="false">
+                <i class="fa-solid fa-film" aria-hidden="true"></i> Анимация
+              </button>
+            </div>
         </div>
 
         <div class="model-layout">
@@ -128,7 +132,21 @@
             <div id="stoolFallback" class="stool-fallback" hidden>
               <p>Трёхмерная графика недоступна в этом браузере.</p>
             </div>
-            <p class="stool-hint">Потяните, чтобы повернуть</p>
+            <div id="stoolVideo" class="stool-video" hidden>
+              <video
+                src="./assets/taburetkavideo.mp4"
+                controls
+                autoplay
+                loop
+                muted
+                playsinline
+                preload="metadata"
+                aria-label="Анимация 3D-модели табуретки"
+              >
+                Ваш браузер не поддерживает воспроизведение видео.
+              </video>
+            </div>
+            <p class="stool-hint" id="stoolHint">Потяните, чтобы повернуть</p>
           </div>
 
           <aside class="details-panel" aria-label="Детали конструкции">
