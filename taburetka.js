@@ -166,19 +166,66 @@ const applyMode = () => {
   model.traverse((o) => { if (o.isMesh) o.material = wireMode ? wireMat : woodMat; });
 };
 
-document.getElementById('stoolRotate').addEventListener('click', (e) => {
-  wireMode = false; applyMode(); controls.autoRotate = true;
-  setActive(e.currentTarget, document.getElementById('stoolWire'));
-});
-document.getElementById('stoolWire').addEventListener('click', (e) => {
-  wireMode = true; applyMode(); controls.autoRotate = false;
-  setActive(e.currentTarget, document.getElementById('stoolRotate'));
+const btnRotate = document.getElementById('stoolRotate');
+const btnWire = document.getElementById('stoolWire');
+const btnAnim = document.getElementById('stoolAnim');
+const videoWrap = document.getElementById('stoolVideo');
+const videoEl = videoWrap ? videoWrap.querySelector('video') : null;
+const allBtns = [btnRotate, btnWire, btnAnim];
+
+let animMode = false;
+
+// Переключение в режим видео
+function enterAnimMode() {
+  animMode = true;
+  wireMode = false;
+  applyMode();
+  stage.classList.add('is-video');
+  videoWrap.hidden = false;
+  if (videoEl) {
+    videoEl.currentTime = 0;
+    videoEl.play().catch(() => {});
+  }
+  controls.autoRotate = false;
+  markActive(btnAnim);
+}
+
+// Выход из режима видео
+function exitAnimMode() {
+  animMode = false;
+  stage.classList.remove('is-video');
+  videoWrap.hidden = true;
+  if (videoEl) videoEl.pause();
+}
+
+// Подсветка активной кнопки (снимает с остальных)
+function markActive(btn) {
+  allBtns.forEach((b) => {
+    const on = b === btn;
+    b.classList.toggle('is-active', on);
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+}
+
+btnRotate.addEventListener('click', () => {
+  exitAnimMode();
+  wireMode = false;
+  applyMode();
+  controls.autoRotate = true;
+  markActive(btnRotate);
 });
 
-function setActive(on, off) {
-  on.classList.add('is-active'); on.setAttribute('aria-pressed', 'true');
-  off.classList.remove('is-active'); off.setAttribute('aria-pressed', 'false');
-}
+btnWire.addEventListener('click', () => {
+  exitAnimMode();
+  wireMode = true;
+  applyMode();
+  controls.autoRotate = false;
+  markActive(btnWire);
+});
+
+btnAnim.addEventListener('click', () => {
+  enterAnimMode();
+});
 
 // ---------- Фильтры деталей ----------
 function setupFilters(root) {
