@@ -19,7 +19,8 @@ try {
   showFallback('WebGL недоступен в этом браузере.');
   throw e;
 }
-fallback.hidden = true; // <-- КЛЮЧЕВОЙ ФИКС: прячем заглушку при рабочем WebGL
+fallback.hidden = true;
+fallback.style.display = 'none';// <-- КЛЮЧЕВОЙ ФИКС: прячем заглушку при рабочем WebGL
 
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setClearColor(0x15110d, 1);
