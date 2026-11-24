@@ -282,6 +282,35 @@ p { margin: 0; }
 .stool-fallback[hidden] {
   display: none !important;
 }
+/* Видео-оверлей внутри 3D-сцены */
+.stool-video {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #15110d;
+  z-index: 5;
+}
+.stool-video[hidden] {
+  display: none !important;
+}
+.stool-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #15110d;
+  outline: none;
+}
+
+/* Скрытие canvas и подсказки при активном видео */
+.stool-stage.is-video .stool-canvas {
+  visibility: hidden;
+}
+.stool-stage.is-video .stool-hint {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
 .stool-hint {
   position: absolute; bottom: 1rem; left: 50%;
   transform: translateX(-50%);
