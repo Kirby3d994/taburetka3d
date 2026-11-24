@@ -2,10 +2,10 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 
-// ---------- НАСТРОЙКИ (меняй здесь) ----------
+// ---------- НАСТРОЙКИ ----------
 const MODEL_PATH = './assets/taburetka.obj';
-const TEXTURE_PATH = './assets/textures/wood.jpg'; // .jpg или .png
-// ----------------------------------------------
+const TEXTURE_PATH = './assets/textures/wood.jpg';
+// -------------------------------
 
 const canvas = document.getElementById('stoolCanvas');
 const fallback = document.getElementById('stoolFallback');
@@ -14,11 +14,12 @@ const filterGroup = document.querySelector('.filter-group');
 
 let renderer;
 try {
-  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 } catch (e) {
   showFallback('WebGL недоступен в этом браузере.');
   throw e;
 }
+fallback.hidden = true; // <-- КЛЮЧЕВОЙ ФИКС: прячем заглушку при рабочем WebGL
 
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setClearColor(0x15110d, 1);
@@ -34,40 +35,22 @@ camera.position.set(3.5, 3, 4.5);
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 controls.dampingFactor = 0.08;
-controls.minDistance = 2;
-controls.maxDistance = 12;
 controls.maxPolarAngle = Math.PI / 2 + 0.1;
 controls.autoRotate = true;
 controls.autoRotateSpeed = 1.2;
-controls.target.set(0, 1.1, 0);
 
 // ---------- Свет ----------
-scene.add(new THREE.AmbientLight(0xfff1dc, 0.55));
-
+scene.add(new THREE.AmbientLight(0xfff1dc, 0.6));
 const key = new THREE.DirectionalLight(0xffe3bf, 1.4);
 key.position.set(4, 6, 3);
 key.castShadow = true;
 key.shadow.mapSize.set(1024, 1024);
-key.shadow.camera.left = -4;
-key.shadow.camera.right = 4;
-key.shadow.camera.top = 4;
-key.shadow.camera.bottom = -4;
 scene.add(key);
-
 const rim = new THREE.DirectionalLight(0xb87333, 0.5);
 rim.position.set(-4, 3, -3);
 scene.add(rim);
 
-// ---------- Пол с тенью ----------
-const floor = new THREE.Mesh(
-  new THREE.CircleGeometry(6, 64),
-  new THREE.ShadowMaterial({ opacity: 0.35 })
-);
-floor.rotation.x = -Math.PI / 2;
-floor.position.y = -0.01;
-floor.receiveShadow = true;
-scene.add(floor);
-
+// ---------- Пол ----------
 const floorVisual = new THREE.Mesh(
   new THREE.CircleGeometry(6, 64),
   new THREE.MeshStandardMaterial({ color: 0x1a1410, roughness: 1 })
@@ -76,172 +59,163 @@ floorVisual.rotation.x = -Math.PI / 2;
 floorVisual.position.y = -0.02;
 scene.add(floorVisual);
 
-// ---------- Загрузка модели ----------
-const textureLoader = new THREE.TextureLoader();
-const objLoader = new OBJLoader();
+const floorShadow = new THREE.Mesh(
+  new THREE.CircleGeometry(6, 64),
+  new THREE.ShadowMaterial({ opacity: 0.35 })
+);
+floorShadow.rotation.x = -Math.PI / 2;
+floorShadow.position.y = -0.01;
+floorShadow.receiveShadow = true;
+scene.add(floorShadow);
 
-let texture;
+// ---------- Материалы ----------
+const textureLoader = new THREE.TextureLoader();
+let texture = null;
 try {
   texture = textureLoader.load(TEXTURE_PATH);
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
   texture.colorSpace = THREE.SRGBColorSpace;
 } catch (e) {
-  console.warn('Текстура не загружена, используется базовый материал.');
+  console.warn('Текстура не загружена — используется базовый материал.');
 }
 
 const woodMat = new THREE.MeshStandardMaterial({
   color: texture ? 0xffffff : 0xe8a65a,
-  map: texture || null,
+  map: texture,
   roughness: 0.7,
-  metalness: 0.0,
+  metalness: 0,
 });
-const wireMat = new THREE.MeshBasicMaterial({
-  color: 0xd9a76a,
-  wireframe: true,
-});
+const wireMat = new THREE.MeshBasicMaterial({ color: 0xd9a76a, wireframe: true });
 
 let model = null;
 let wireMode = false;
 
-objLoader.load(
+// ---------- Загрузка OBJ ----------
+new OBJLoader().load(
   MODEL_PATH,
-  (loadedModel) => {
-    model = normalizeModel(loadedModel);
-    model.traverse((obj) => {
-      if (obj.isMesh) {
-        obj.material = woodMat;
-        obj.castShadow = true;
-        obj.receiveShadow = true;
+  (loaded) => {
+    model = normalizeModel(loaded);
+    model.traverse((o) => {
+      if (o.isMesh) {
+        o.material = woodMat;
+        o.castShadow = true;
+        o.receiveShadow = true;
       }
     });
     scene.add(model);
+    fitCameraToObject(model);
     setupFilters(model);
+    fallback.hidden = true; // <-- на всякий случай ещё раз прячем заглушку
+    console.log('Модель отображена. Мешей:', countMeshes(model));
   },
   (xhr) => {
-    if (xhr.total) {
-      console.log(`Загрузка модели: ${((xhr.loaded / xhr.total) * 100).toFixed(0)}%`);
-    }
+    if (xhr.total) console.log(`Загрузка модели: ${((xhr.loaded / xhr.total) * 100).toFixed(0)}%`);
   },
   (err) => {
     console.error('Ошибка загрузки .obj:', err);
-    showFallback('Не удалось загрузить модель taburetka.obj. Проверь путь и наличие файла.');
+    showFallback('Не удалось загрузить taburetka.obj. Проверь путь и наличие файла.');
   }
 );
 
-// ---------- Нормализация модели (масштаб + центрирование) ----------
+// ---------- Нормализация (масштаб + посадка на пол) ----------
 function normalizeModel(obj) {
+  let box = new THREE.Box3().setFromObject(obj);
+  const size = box.getSize(new THREE.Vector3());
+  const maxDim = Math.max(size.x, size.y, size.z);
+
+  // Если размер невалидный (NaN/0) — не трогаем масштаб, только центрируем
+  if (isFinite(maxDim) && maxDim > 0) {
+    const scale = 2.5 / maxDim;
+    obj.scale.setScalar(scale);
+    box = new THREE.Box3().setFromObject(obj);
+  }
+
+  const center = box.getCenter(new THREE.Vector3());
+  obj.position.x -= center.x;
+  obj.position.z -= center.z;
+  obj.position.y -= box.min.y; // ставим нижнюю точку на уровень пола
+  return obj;
+}
+
+// ---------- Авто-подгонка камеры под модель ----------
+function fitCameraToObject(obj) {
   const box = new THREE.Box3().setFromObject(obj);
   const size = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());
+  const maxDim = Math.max(size.x, size.y, size.z);
+  const fov = camera.fov * (Math.PI / 180);
+  const dist = (maxDim / 2) / Math.tan(fov / 2) * 1.6;
 
-  // Приводим к высоте ~2.5 единицы
-  const targetHeight = 2.5;
-  const scale = targetHeight / Math.max(size.x, size.y, size.z);
-  obj.scale.setScalar(scale);
+  controls.target.copy(center);
+  camera.position.set(center.x + dist * 0.7, center.y + dist * 0.35, center.z + dist);
+  controls.minDistance = dist * 0.5;
+  controls.maxDistance = dist * 3;
+  controls.update();
+}
 
-  // Пересчитываем после масштаба
-  const box2 = new THREE.Box3().setFromObject(obj);
-  const center2 = box2.getCenter(new THREE.Vector3());
-  obj.position.sub(center2);
-  obj.position.y += targetHeight / 2; // ставим на "пол"
-
-  return obj;
+function countMeshes(obj) {
+  let n = 0;
+  obj.traverse((o) => { if (o.isMesh) n++; });
+  return n;
 }
 
 // ---------- Режим каркаса ----------
 const applyMode = () => {
   if (!model) return;
-  model.traverse((obj) => {
-    if (obj.isMesh) obj.material = wireMode ? wireMat : woodMat;
-  });
+  model.traverse((o) => { if (o.isMesh) o.material = wireMode ? wireMat : woodMat; });
 };
 
 document.getElementById('stoolRotate').addEventListener('click', (e) => {
-  wireMode = false;
-  applyMode();
-  controls.autoRotate = true;
-  e.currentTarget.classList.add('is-active');
-  e.currentTarget.setAttribute('aria-pressed', 'true');
-  document.getElementById('stoolWire').classList.remove('is-active');
-  document.getElementById('stoolWire').setAttribute('aria-pressed', 'false');
+  wireMode = false; applyMode(); controls.autoRotate = true;
+  setActive(e.currentTarget, document.getElementById('stoolWire'));
 });
-
 document.getElementById('stoolWire').addEventListener('click', (e) => {
-  wireMode = true;
-  applyMode();
-  controls.autoRotate = false;
-  e.currentTarget.classList.add('is-active');
-  e.currentTarget.setAttribute('aria-pressed', 'true');
-  document.getElementById('stoolRotate').classList.remove('is-active');
-  document.getElementById('stoolRotate').setAttribute('aria-pressed', 'false');
+  wireMode = true; applyMode(); controls.autoRotate = false;
+  setActive(e.currentTarget, document.getElementById('stoolRotate'));
 });
 
-// ---------- Фильтры деталей (работают если в OBJ есть именованные группы) ----------
+function setActive(on, off) {
+  on.classList.add('is-active'); on.setAttribute('aria-pressed', 'true');
+  off.classList.remove('is-active'); off.setAttribute('aria-pressed', 'false');
+}
+
+// ---------- Фильтры деталей (работают по именам групп в OBJ) ----------
 function setupFilters(root) {
-  const groups = {};
-  root.traverse((obj) => {
-    if (obj.isMesh && obj.name) {
-      const name = obj.name.toLowerCase();
-      if (name.includes('seat') || name.includes('сидень') || name.includes('sit')) {
-        groups.seat = groups.seat || [];
-        groups.seat.push(obj);
-      }
-      if (name.includes('leg') || name.includes('ножк')) {
-        groups.legs = groups.legs || [];
-        groups.legs.push(obj);
-      }
-      if (name.includes('rung') || name.includes('cross') || name.includes('пронож')) {
-        groups.rungs = groups.rungs || [];
-        groups.rungs.push(obj);
-      }
-    }
+  const groups = { seat: [], legs: [], rungs: [] };
+  root.traverse((o) => {
+    if (!o.isMesh || !o.name) return;
+    const n = o.name.toLowerCase();
+    if (n.includes('seat') || n.includes('сидень') || n.includes('sit')) groups.seat.push(o);
+    else if (n.includes('leg') || n.includes('ножк')) groups.legs.push(o);
+    else if (n.includes('rung') || n.includes('cross') || n.includes('пронож')) groups.rungs.push(o);
   });
 
-  // Если групп нет — скрываем фильтры
-  if (!groups.seat && !groups.legs && !groups.rungs) {
-    if (filterGroup) filterGroup.style.display = 'none';
-    return;
-  }
+  const hasGroups = groups.seat.length || groups.legs.length || groups.rungs.length;
+  if (!hasGroups) { if (filterGroup) filterGroup.style.display = 'none'; return; }
 
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  filterBtns.forEach((btn) => {
+  document.querySelectorAll('.filter-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
-      const filter = btn.dataset.filter;
-      filterBtns.forEach((b) => {
-        b.classList.remove('is-active');
-        b.setAttribute('aria-pressed', 'false');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.filter-btn').forEach((b) => {
+        b.classList.toggle('is-active', b === btn);
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
       });
-      btn.classList.add('is-active');
-      btn.setAttribute('aria-pressed', 'true');
-
-      // Скрыть все mesh, показать нужные
-      root.traverse((obj) => {
-        if (obj.isMesh) obj.visible = false;
-      });
-
-      if (filter === 'all') {
-        root.traverse((obj) => { if (obj.isMesh) obj.visible = true; });
-      } else {
-        (groups[filter] || []).forEach((m) => { m.visible = true; });
-      }
+      root.traverse((o) => { if (o.isMesh) o.visible = f === 'all'; });
+      if (f !== 'all') groups[f].forEach((m) => { m.visible = true; });
     });
   });
 }
 
-// ---------- Fallback ----------
+// ---------- Заглушка ----------
 function showFallback(msg) {
   if (canvas) canvas.hidden = true;
-  if (fallback) {
-    fallback.hidden = false;
-    fallback.innerHTML = `<p>${msg}</p>`;
-  }
+  if (fallback) { fallback.hidden = false; fallback.innerHTML = `<p>${msg}</p>`; }
 }
 
-// ---------- Ресайз ----------
+// ---------- Ресайз + цикл ----------
 const resize = () => {
-  const w = stage.clientWidth;
-  const h = stage.clientHeight;
+  const w = stage.clientWidth, h = stage.clientHeight;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
@@ -249,10 +223,8 @@ const resize = () => {
 resize();
 window.addEventListener('resize', resize);
 
-// ---------- Анимация ----------
-const tick = () => {
+(function tick() {
   controls.update();
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
-};
-tick();
+})();
